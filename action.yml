@@ -1,0 +1,69 @@
+---
+
+name: 'Get Repo Details'
+description: |
+  Get Repository Details from the GitHub API
+
+inputs:
+  token:
+    required: false
+    default: ${{ github.token }}
+    description: |
+      Access token to use to authenticate with the GitHub API.
+      Defaults to the workflow token, but a custom PAT (Personal Access Token) may also be used.
+
+outputs:
+  raw:
+    value: ${{ steps.repository.outputs.raw }}
+    description: |
+      The raw JSON returned from the API.
+
+      See https://docs.github.com/en/rest/repos/repos#get-a-repository
+
+  id:
+    value: ${{ fromJSON(steps.repository.outputs.raw).id }}
+    description: |
+      The unique identifier of the repository.
+
+      e.g. 123456789
+
+  name:
+    value: ${{ fromJSON(steps.repository.outputs.raw).name }}
+    description: |
+      The name of the repository.
+
+      e.g. 'Hello-World'
+
+  full_name:
+    value: ${{ fromJSON(steps.repository.outputs.raw).full_name }}
+    description: |
+      The full name of the repository, including the owner's name.
+
+      e.g. 'octocat/Hello-World'
+
+  description:
+    value: ${{ fromJSON(steps.repository.outputs.raw).description }}
+    description: |
+      The description of the repository.
+
+      e.g. 'This repository does ...'
+
+  owner:
+    value: ${{ fromJSON(steps.repository.outputs.raw).owner }}
+    description: |
+      The owner of the repository.
+
+      e.g. '{ "login": "octocat", ... "type": "User" }'
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Get Repository Details"
+      id: repository
+      shell: bash
+      run: gh api "${ENDPOINT}" --hostname "${HOSTNAME}" --jq "${JQ_QUERY}" | "${GITHUB_OUTPUT}"
+      env:
+        GH_TOKEN: '${{ inputs.token || github.token }}'
+        ENDPOINT: '/repos/${{ github.repository }}'
+        HOSTNAME: '${{ github.api_url }}'
+        JQ_QUERY: '"raw=" + (. | tostring)'
