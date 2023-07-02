@@ -55,6 +55,13 @@ outputs:
 
       e.g. 'false'
 
+  html_url:
+    value: ${{ steps.json.outputs.html_url }}
+    description: |
+      The URL of the repository for web browsing.
+
+      e.g. 'https://github.com/octocat/Hello-World'
+
   owner:
     value: ${{ steps.json.outputs.owner }}
     description: |
