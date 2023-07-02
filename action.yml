@@ -76,6 +76,13 @@ outputs:
 
       e.g. 'false'
 
+  default_branch:
+    value: ${{ steps.json.outputs.default_branch }}
+    description: |
+      The default branch of the repository.
+
+      e.g. 'main'
+
   owner:
     value: ${{ steps.json.outputs.owner }}
     description: |
