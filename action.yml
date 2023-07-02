@@ -21,35 +21,35 @@ outputs:
       See https://docs.github.com/en/rest/repos/repos#get-a-repository
 
   id:
-    value: ${{ steps.repository.outputs.raw.id }}
+    value: ${{ fromJSON(steps.repository.outputs.raw).id }}
     description: |
       The unique identifier of the repository.
 
       e.g. 123456789
 
   name:
-    value: ${{ steps.repository.outputs.raw.name }}
+    value: ${{ fromJSON(steps.repository.outputs.raw).name }}
     description: |
       The name of the repository.
 
       e.g. 'Hello-World'
 
   full_name:
-    value: ${{ steps.repository.outputs.raw.full_name }}
+    value: ${{ fromJSON(steps.repository.outputs.raw).full_name }}
     description: |
       The full name of the repository, including the owner's name.
 
       e.g. 'octocat/Hello-World'
 
   description:
-    value: ${{ steps.repository.outputs.raw.description }}
+    value: ${{ fromJSON(steps.repository.outputs.raw).description }}
     description: |
       The description of the repository.
 
       e.g. 'This repository does ...'
 
   owner:
-    value: ${{ steps.repository.outputs.raw.owner }}
+    value: ${{ fromJSON(steps.repository.outputs.raw).owner }}
     description: |
       The owner of the repository.
 
