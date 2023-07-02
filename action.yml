@@ -97,6 +97,13 @@ outputs:
 
       e.g. '{ "login": "octocat", ... "type": "User" }'
 
+  license:
+    value: ${{ steps.json.outputs.license }}
+    description: |
+      The repository's license, if one is detected.
+
+      e.g. { "name": "MIT License", ... "url": "https://api.github.com/licenses/mit" }
+
 runs:
   using: "composite"
   steps:
