@@ -21,42 +21,42 @@ outputs:
       See https://docs.github.com/en/rest/repos/repos#get-a-repository
 
   id:
-    value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).id }}
+    value: ${{ steps.json.outputs.id }}
     description: |
       The unique identifier of the repository.
 
       e.g. 123456789
 
   name:
-    value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).name }}
+    value: ${{ steps.json.outputs.name }}
     description: |
       The name of the repository.
 
       e.g. 'Hello-World'
 
   full_name:
-    value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).full_name }}
+    value: ${{ steps.json.outputs.full_name }}
     description: |
       The full name of the repository, including the owner's name.
 
       e.g. 'octocat/Hello-World'
 
   description:
-    value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).description }}
+    value: ${{ steps.json.outputs.description }}
     description: |
       The description of the repository.
 
       e.g. 'This repository does ...'
 
   private:
-    value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).private }}
+    value: ${{ steps.json.outputs.private }}
     description: |
       Whether the repository is private or public.
 
       e.g. 'false'
 
   owner:
-    value: ${{ toJSON(fromJSON(format('{0}', steps.repository.outputs.raw)).owner) }}
+    value: ${{ steps.json.outputs.owner) }}
     description: |
       The owner of the repository.
 
@@ -68,9 +68,16 @@ runs:
     - name: "Get Repository Details"
       id: repository
       shell: bash
-      run: gh api "${HOSTNAME}/${ENDPOINT}" | jq --raw-output "${JQ_QUERY}" | tee "${GITHUB_OUTPUT}"
+      run: gh api "${HOSTNAME}/${ENDPOINT}" | tee raw.json | jq --raw-output "${JQ_QUERY}" | tee "${GITHUB_OUTPUT}"
       env:
         GH_TOKEN: '${{ inputs.token || github.token }}'
         ENDPOINT: 'repos/${{ github.repository }}'
         HOSTNAME: '${{ github.api_url }}'
         JQ_QUERY: '"raw=" + (. | tostring)'
+
+    - name: "Extract JSON Fields"
+      id: json
+      shell: bash
+      run: jq "${JQ_QUERY}" < raw.json | tee "${GITHUB_OUTPUT}"
+      env:
+        JQ_QUERY: '. | to_entries[] | select(.value != "") | .key + "=" + (.value | tostring)'
