@@ -48,6 +48,13 @@ outputs:
 
       e.g. 'This repository does ...'
 
+  private:
+    value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).private }}
+    description: |
+      Whether the repository is private or public.
+
+      e.g. 'false'
+
   owner:
     value: ${{ toJSON(fromJSON(format('{0}', steps.repository.outputs.raw)).owner) }}
     description: |
