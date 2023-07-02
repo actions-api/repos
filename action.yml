@@ -76,6 +76,13 @@ outputs:
 
       e.g. 'false'
 
+  archived:
+    value: ${{  }}
+    description: |
+      Whether the repository is archived.
+
+      e.g. 'false'
+
   default_branch:
     value: ${{ steps.json.outputs.default_branch }}
     description: |
