@@ -64,6 +64,6 @@ runs:
       run: gh api "${HOSTNAME}/${ENDPOINT}" --jq "${JQ_QUERY}" | "${GITHUB_OUTPUT}"
       env:
         GH_TOKEN: '${{ inputs.token || github.token }}'
-        ENDPOINT: '/repos/${{ github.repository }}'
+        ENDPOINT: 'repos/${{ github.repository }}'
         HOSTNAME: '${{ github.api_url }}'
         JQ_QUERY: '"raw=" + (. | tostring)'
