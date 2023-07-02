@@ -77,7 +77,7 @@ outputs:
       e.g. 'false'
 
   archived:
-    value: ${{  }}
+    value: ${{ steps.json.outputs.archived }}
     description: |
       Whether the repository is archived.
 
