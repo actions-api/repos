@@ -55,6 +55,13 @@ outputs:
 
       e.g. 'false'
 
+  visibility:
+    value: ${{ steps.json.outputs.visibility }}
+    description: |
+      The repository visibility: public, private, or internal.
+
+      e.g. 'public'
+
   html_url:
     value: ${{ steps.json.outputs.html_url }}
     description: |
