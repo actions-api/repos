@@ -48,12 +48,12 @@ outputs:
 
       e.g. 'This repository does ...'
 
-  #owner:
-  #  value: ${{ fromJSON(format('{0}', steps.repository.outputs.raw)).owner }}
-  #  description: |
-  #    The owner of the repository.
-  #
-  #    e.g. '{ "login": "octocat", ... "type": "User" }'
+  owner:
+    value: ${{ format('{0}', steps.repository.outputs.raw) }}
+    description: |
+      The owner of the repository.
+
+      e.g. '{ "login": "octocat", ... "type": "User" }'
 
 runs:
   using: "composite"
