@@ -61,7 +61,7 @@ runs:
     - name: "Get Repository Details"
       id: repository
       shell: bash
-      run: gh api "${HOSTNAME}/${ENDPOINT}" --jq "${JQ_QUERY}" | "${GITHUB_OUTPUT}"
+      run: gh api "${HOSTNAME}/${ENDPOINT}" --jq "${JQ_QUERY}" > "${GITHUB_OUTPUT}"
       env:
         GH_TOKEN: '${{ inputs.token || github.token }}'
         ENDPOINT: 'repos/${{ github.repository }}'
