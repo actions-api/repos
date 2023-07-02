@@ -14,7 +14,7 @@ inputs:
 
 outputs:
   raw:
-    value: ${{ steps.repository.outputs.raw }}
+    value: ${{ toJSON(steps.repository.outputs.raw) }}
     description: |
       The raw JSON returned from the API.
 
