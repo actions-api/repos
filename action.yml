@@ -56,7 +56,7 @@ outputs:
       e.g. 'false'
 
   owner:
-    value: ${{ steps.json.outputs.owner) }}
+    value: ${{ steps.json.outputs.owner }}
     description: |
       The owner of the repository.
 
